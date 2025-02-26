@@ -1,0 +1,50 @@
+#carro-container {
+    width: 300px;
+    margin: 20px auto;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    position: relative; /* Necessário para a animação */
+}
+
+#carro-imagem {
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+#controles {
+    text-align: center;
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+/* Animação */
+.mover-carro {
+    animation: mover 5s linear infinite;
+}
+
+@keyframes mover {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: 200px; /* Ajuste a distância do movimento */
+    }
+}
+
+#ligar{
+    background-color: green;
+}
+
+#desligar{
+    background-color: red;
+}
+
+#acelerar{
+    background-color: yellow;
+}
