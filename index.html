@@ -1,31 +1,185 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carro Interativo</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Garagem Inteligente</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Link para o CSS. Não precisa estar dentro da pasta css se estiver no mesmo nível -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> -->
 </head>
-<body>
-    <h1>Meu Carro</h1>
 
-    <div id="carro-container">
-        <img id="carro-imagem" src="img/carro.png" alt="Imagem do Carro">
-        <p>Modelo: <span id="modelo"></span></p>
-        <p>Cor: <span id="cor"></span></p>
-        <p>Velocidade: <span id="velocidade">0</span> km/h</p>
+<body>
+    <h1>Garagem Inteligente</h1>
+
+    <!-- Área de Notificações -->
+    <div id="notificacoes" class="notificacoes-container"></div>
+
+    <div class="container">
+        <!-- Container Carro Comum -->
+        <div id="carro-container" class="veiculo-container">
+            <h2>Carro Comum</h2>
+            <img id="carro-imagem" src="img/carro.jpg" alt="Imagem do Carro">
+            <p>Modelo: <span id="modelo-carro"></span></p> <!-- ID específico -->
+            <p>Cor: <span id="cor-carro"></span></p>     <!-- ID específico -->
+            <p>Estado: <span id="estado-carro">Desligado</span></p> <!-- ID específico -->
+            <p>Velocidade: <span id="velocidade-carro">0</span> km/h</p> <!-- ID específico -->
+            <div class="barra-progresso-container">
+                <div id="barra-progresso-carro" class="barra-progresso"></div>
+            </div>
+            <div id="controles-carro"> <!-- ID específico -->
+                <button id="ligar-carro">Ligar</button>
+                <button id="desligar-carro">Desligar</button>
+                <button id="acelerar-carro">Acelerar</button>
+                <button id="frear-carro">Frear</button>
+                <button id="mudarCor-carro">Mudar Cor</button>
+                <button id="animar-carro">Animar</button>
+                <!-- Botão buzina será adicionado via JS -->
+            </div>
+            <!-- Áudios (mantidos como no seu original) -->
+            <audio id="som-buzina" src="sounds/buzina.mp3" preload="auto"></audio>
+            <audio id="som-acelerar" src="sounds/carroacelerando.mp3" preload="auto"></audio>
+            <audio id="som-frear" src="sounds/freio.mp3" preload="auto"></audio>
+            <audio id="som-ligar" src="sounds/carrodesligando.mp3" preload="auto"></audio>
+            <audio id="som-desligar" src="sounds/carrodesligando.mp3" preload="auto"></audio>
+        </div>
+
+        <!-- Container Carro Esportivo -->
+        <div id="carroEsportivo-container" class="veiculo-container"> <!-- ID padronizado -->
+             <h2>Carro Esportivo</h2>
+             <img id="carroEsportivo-imagem" src="img/carroesportivo.jpg" alt="Carro Esportivo">
+             <p>Modelo: <span id="modelo-carroEsportivo"></span></p> <!-- ID específico -->
+             <p>Cor: <span id="cor-carroEsportivo"></span></p>     <!-- ID específico -->
+             <p>Estado: <span id="estado-carroEsportivo">Desligado</span></p> <!-- ID específico -->
+             <p>Velocidade: <span id="velocidade-carroEsportivo">0</span> km/h</p> <!-- ID específico -->
+             <p>Turbo: <span id="turbo-carroEsportivo">Desativado</span></p> <!-- ID específico -->
+             <div class="barra-progresso-container">
+                 <div id="barra-progresso-carroEsportivo" class="barra-progresso"></div> <!-- ID específico -->
+             </div>
+             <div id="controles-carroEsportivo"> <!-- ID específico -->
+                 <button id="ligar-carroEsportivo">Ligar</button>
+                 <button id="desligar-carroEsportivo">Desligar</button>
+                 <button id="acelerar-carroEsportivo">Acelerar</button>
+                 <button id="frear-carroEsportivo">Frear</button>
+                 <button id="ativar-turbo-carroEsportivo">Ativar Turbo</button>
+                 <button id="desativar-turbo-carroEsportivo">Desativar Turbo</button>
+                 <button id="mudarCor-carroEsportivo">Mudar Cor</button>
+                 <!-- Botão buzina será adicionado via JS -->
+             </div>
+        </div>
+
+        <!-- Container Caminhão -->
+        <div id="caminhao-container" class="veiculo-container">
+            <h2>Caminhão</h2>
+            <img id="caminhao-imagem" src="img/caminhao.jpg" alt="Caminhão">
+            <p>Modelo: <span id="modelo-caminhao"></span></p> <!-- ID específico -->
+            <p>Cor: <span id="cor-caminhao"></span></p>     <!-- ID específico -->
+            <p>Estado: <span id="estado-caminhao">Desligado</span></p> <!-- ID específico -->
+            <p>Velocidade: <span id="velocidade-caminhao">0</span> km/h</p> <!-- ID específico -->
+            <p>Capacidade: <span id="capacidade-carga-caminhao"></span> kg</p> <!-- ID específico -->
+            <p>Carga Atual: <span id="carga-atual-caminhao">0</span> kg</p>   <!-- ID específico -->
+            <div class="barra-progresso-container">
+                <div id="barra-progresso-caminhao" class="barra-progresso"></div>
+            </div>
+            <div id="controles-caminhao"> <!-- ID específico -->
+                <button id="ligar-caminhao">Ligar</button>
+                <button id="desligar-caminhao">Desligar</button>
+                <button id="acelerar-caminhao">Acelerar</button>
+                <button id="frear-caminhao">Frear</button>
+                <input type="number" id="quantidade-carga-caminhao" placeholder="Qtd. (kg)"> <!-- ID específico -->
+                <button id="carregar-caminhao">Carregar</button>
+                <!-- Botão descarregar e buzina adicionados via JS -->
+                <button id="mudarCor-caminhao">Mudar Cor</button>
+            </div>
+        </div>
+
+        <!-- Container Moto -->
+        <div id="moto-container" class="veiculo-container">
+            <h2>Moto</h2>
+            <img id="moto-imagem" src="img/moto.webp" alt="Imagem da Moto">
+            <p>Modelo: <span id="modelo-moto"></span></p> <!-- ID específico -->
+            <p>Cor: <span id="cor-moto"></span></p>     <!-- ID específico -->
+            <p>Estado: <span id="estado-moto">Desligado</span></p> <!-- ID específico -->
+            <p>Velocidade: <span id="velocidade-moto">0</span> km/h</p> <!-- ID específico -->
+            <div class="barra-progresso-container">
+                <div id="barra-progresso-moto" class="barra-progresso"></div>
+            </div>
+            <div id="controles-moto"> <!-- ID específico -->
+                <button id="ligar-moto">Ligar</button>
+                <button id="desligar-moto">Desligar</button>
+                <button id="acelerar-moto">Acelerar</button>
+                <button id="frear-moto">Frear</button>
+                <button id="mudarCor-moto">Mudar Cor</button>
+                 <!-- Botão de buzina será adicionado via JS -->
+            </div>
+        </div>
+
+        <!-- Container Bicicleta -->
+        <div id="bicicleta-container" class="veiculo-container">
+            <h2>Bicicleta</h2>
+            <img id="bicicleta-imagem" src="img/bicicleta.jpg" alt="Imagem da Bicicleta">
+            <p>Modelo: <span id="modelo-bicicleta"></span></p> <!-- ID específico -->
+            <p>Cor: <span id="cor-bicicleta"></span></p>     <!-- ID específico -->
+            <p>Velocidade: <span id="velocidade-bicicleta">0</span> km/h</p> <!-- ID específico -->
+            <div class="barra-progresso-container">
+                <div id="barra-progresso-bicicleta" class="barra-progresso"></div>
+            </div>
+            <div id="controles-bicicleta"> <!-- ID específico -->
+                <button id="acelerar-bicicleta">Acelerar</button>
+                <button id="frear-bicicleta">Frear</button>
+                <button id="mudarCor-bicicleta">Mudar Cor</button>
+                 <!-- Sem buzina motorizada :) -->
+            </div>
+        </div>
+    </div> <!-- Fim .container -->
+
+    <!-- Botões para selecionar o veículo -->
+    <div id="selecaoVeiculo" class="selecao-container">
+        <h2>Selecionar Veículo para Detalhes e Agendamento</h2>
+        <button id="selecionarCarro" data-tipo="Carro">Carro</button> <!-- data-tipo adicionado -->
+        <button id="selecionarCarroEsportivo" data-tipo="CarroEsportivo">Esportivo</button> <!-- data-tipo adicionado -->
+        <button id="selecionarCaminhao" data-tipo="Caminhao">Caminhão</button> <!-- data-tipo adicionado -->
+        <button id="selecionarMoto" data-tipo="Moto">Moto</button> <!-- data-tipo adicionado -->
+        <button id="selecionarBicicleta" data-tipo="Bicicleta">Bicicleta</button> <!-- data-tipo adicionado -->
     </div>
 
-    <div id="circulo-controles">
-        <div id="controles">
-            <button id="ligar">Ligar</button>
-            <button id="desligar">Desligar</button>
-            <button id="acelerar">Acelerar</button>
-            <button id="mudarCor">Mudar Cor</button>
-            <button id="animar">Animar</button>
+    <!-- Seção para exibir informações e agendamento -->
+    <div id="detalhes-e-agendamento" class="detalhes-container" style="display: none;"> <!-- Começa oculta -->
+        <h2>Detalhes e Manutenção do Veículo Selecionado</h2>
+        <div id="informacoesVeiculo">
+            <!-- Conteúdo será preenchido via JS -->
+        </div>
+
+        <!-- Formulário de Agendamento (dentro de 'informacoesVeiculo' ou separado) -->
+        <div id="agendamento-form-container" style="display: none;"> <!-- Começa oculto -->
+             <h3>Agendar Nova Manutenção</h3>
+             <form id="form-agendamento">
+                 <label for="agenda-data">Data:</label>
+                 <input type="date" id="agenda-data" required>
+
+                 <label for="agenda-tipo">Tipo de Serviço:</label>
+                 <input type="text" id="agenda-tipo" placeholder="Ex: Troca de óleo" required>
+
+                 <label for="agenda-custo">Custo (R$):</label>
+                 <input type="number" id="agenda-custo" step="0.01" min="0" placeholder="150.00" required>
+
+                 <label for="agenda-descricao">Descrição (Opcional):</label>
+                 <textarea id="agenda-descricao" rows="2"></textarea>
+
+                 <button type="submit">Agendar/Registrar</button> <!-- Texto ajustado -->
+             </form>
+        </div>
+
+         <!-- Área para Agendamentos Futuros (dentro de 'informacoesVeiculo' ou separado) -->
+        <div id="agendamentos-futuros-container" style="display: none;"> <!-- Começa oculto -->
+            <h4>Próximos Agendamentos</h4>
+            <pre id="agendamentos-futuros-conteudo"></pre>
         </div>
     </div>
 
+    <!-- Scripts -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
     <script src="script.js"></script>
 </body>
 </html>

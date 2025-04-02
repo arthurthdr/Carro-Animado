@@ -1,50 +1,569 @@
-#carro-container {
-    width: 300px;
-    margin: 20px auto;
-    text-align: center;
-    border: 1px solid #ccc;
-    padding: 10px;
-    position: relative; /* Necessário para a animação */
+/* Estilos Globais */
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    line-height: 1.5; /* Melhora legibilidade geral */
 }
 
-#carro-imagem {
-    width: 200px;
+h1, h2, h3, h4 {
+    text-align: center;
+    color: #333;
+    margin-top: 15px;
     margin-bottom: 10px;
 }
 
-#controles {
+h1 {
+    margin-bottom: 25px; /* Mais espaço após o título principal */
+}
+
+/* Layout Principal */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Espaça igualmente */
+    align-items: stretch; /* Faz containers terem a mesma altura na linha */
+    width: 95%;
+    max-width: 1400px;
+    margin-bottom: 20px;
+}
+
+/* Container de Veículo */
+.veiculo-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px;
     text-align: center;
-    margin-top: 10px;
+    width: calc(33.333% - 40px); /* 3 colunas com margem */
+    min-width: 280px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column; /* Organiza conteúdo verticalmente */
+    box-sizing: border-box; /* Inclui padding e border na largura/altura */
 }
 
+.veiculo-container h2 {
+    font-size: 1.3em;
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #0056b3;
+}
+
+.veiculo-container img {
+    width: 100%;
+    max-width: 220px;
+    height: 150px; /* Altura fixa para alinhar visualmente */
+    object-fit: contain; /* Ajusta imagem sem distorcer */
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 4px;
+}
+
+.veiculo-container p {
+    color: #555;
+    margin: 5px 0; /* Espaçamento vertical consistente */
+    font-size: 0.95em;
+    word-wrap: break-word; /* Quebra palavras longas se necessário */
+}
+
+/* Controles de Veículo (Div pai) */
+#controles-carro,
+#controles-carroEsportivo,
+#controles-caminhao,
+#controles-moto,
+#controles-bicicleta {
+    width: 100%;
+    text-align: center;
+    margin-top: auto; /* Empurra para o fundo do flex container */
+    padding-top: 15px; /* Espaço acima dos botões */
+    border-top: 1px solid #eee; /* Linha divisória */
+}
+
+/* Botões Gerais */
 button {
-    padding: 10px 20px;
-    margin: 5px;
+    padding: 8px 14px;
+    margin: 4px;
     cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    color: white;
+    font-size: 0.85em;
+    vertical-align: middle; /* Alinha melhor com inputs */
+}
+button:active {
+    transform: scale(0.95); /* Efeito de clique */
+}
+button:disabled { /* Estilo para botões desabilitados */
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
-/* Animação */
-.mover-carro {
-    animation: mover 5s linear infinite;
+/* Cores dos Botões por Ação (Usando IDs específicos) */
+
+/* Ligar / Carregar */
+#ligar-carro, #ligar-carroEsportivo, #ligar-caminhao, #ligar-moto,
+#carregar-caminhao { background-color: #28a745; }
+#ligar-carro:hover, #ligar-carroEsportivo:hover, #ligar-caminhao:hover, #ligar-moto:hover,
+#carregar-caminhao:hover { background-color: #218838; }
+
+/* Desligar */
+#desligar-carro, #desligar-carroEsportivo, #desligar-caminhao, #desligar-moto { background-color: #dc3545; }
+#desligar-carro:hover, #desligar-carroEsportivo:hover, #desligar-caminhao:hover, #desligar-moto:hover { background-color: #c82333; }
+
+/* Acelerar / Descarregar */
+#acelerar-carro, #acelerar-carroEsportivo, #acelerar-caminhao, #acelerar-moto, #acelerar-bicicleta,
+#descarregar-caminhao /* ID para botão dinâmico */ { background-color: #ffc107; color: #212529; }
+#acelerar-carro:hover, #acelerar-carroEsportivo:hover, #acelerar-caminhao:hover, #acelerar-moto:hover, #acelerar-bicicleta:hover,
+#descarregar-caminhao:hover { background-color: #e0a800; }
+
+/* Frear */
+#frear-carro, #frear-carroEsportivo, #frear-caminhao, #frear-moto, #frear-bicicleta { background-color: #17a2b8; }
+#frear-carro:hover, #frear-carroEsportivo:hover, #frear-caminhao:hover, #frear-moto:hover, #frear-bicicleta:hover { background-color: #138496; }
+
+/* Mudar Cor */
+#mudarCor-carro, #mudarCor-carroEsportivo, #mudarCor-caminhao, #mudarCor-moto, #mudarCor-bicicleta { background-color: #6f42c1; }
+#mudarCor-carro:hover, #mudarCor-carroEsportivo:hover, #mudarCor-caminhao:hover, #mudarCor-moto:hover, #mudarCor-bicicleta:hover { background-color: #5a32a3; }
+
+/* Turbo / Buzina / Animar */
+#ativar-turbo-carroEsportivo { background-color: #fd7e14; }
+#ativar-turbo-carroEsportivo:hover { background-color: #e66a0a; }
+#desativar-turbo-carroEsportivo, .buzina-btn /* Classe para botões de buzina */ { background-color: #6c757d; }
+#desativar-turbo-carroEsportivo:hover, .buzina-btn:hover { background-color: #5a6268; }
+#animar-carro /* ID específico para botão animar */ { background-color: #0dcaf0; color: #000;}
+#animar-carro:hover { background-color: #0baccc;}
+
+/* Input de Carga (Caminhão) */
+#quantidade-carga-caminhao {
+    padding: 7px 10px; /* Ajuste padding */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 4px;
+    width: 75px; /* Pouco mais largo */
+    box-sizing: border-box;
+    font-size: 0.9em;
+    vertical-align: middle; /* Alinha melhor com botões */
 }
 
+/* Barra de Progresso */
+.barra-progresso-container {
+    width: 90%;
+    margin: 12px auto; /* Mais espaço vertical */
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.barra-progresso {
+    width: 0%;
+    height: 100%;
+    background-color: #0d6efd; /* Cor inicial azul */
+    transition: width 0.4s ease-out, background-color 0.4s ease; /* Transição suave */
+    line-height: 12px;
+    font-size: 0.7em;
+    color: white;
+    text-align: center;
+}
+/* Cores condicionais da barra (mantidas do seu código) */
+/* (O JavaScript já define estas cores diretamente, mas pode deixar aqui como fallback) */
+/*
+.barra-progresso.high { background-color: #ffc107; }
+.barra-progresso.critical { background-color: #dc3545; }
+*/
+
+
+/* Seleção de Veículo */
+.selecao-container {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    text-align: center;
+    width: 95%; /* Ajustar largura conforme necessário */
+    max-width: 1200px; /* Limite */
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+}
+.selecao-container h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+}
+.selecao-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    margin: 5px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+.selecao-container button:hover {
+    background-color: #0056b3;
+}
+.selecao-container button.selecionado { /* Estilo para botão ativo */
+    background-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 86, 179, 0.6); /* Sombra mais suave */
+    font-weight: bold;
+    transform: scale(1.02); /* Leve aumento */
+}
+
+
+/* Área de Detalhes e Agendamento */
+.detalhes-container {
+    margin-top: 20px;
+    padding: 25px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff;
+    width: 90%;
+    max-width: 900px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    /* display: none; será controlado por JS */
+}
+.detalhes-container h2 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.5em;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Informações do Veículo na área de detalhes */
+#informacoesVeiculo {
+    margin-bottom: 25px;
+    overflow: auto; /* Clearfix para conter float */
+}
+#informacoesVeiculo h3 { /* Título do veículo */
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #0056b3;
+    font-size: 1.3em;
+    float: left; /* Título à esquerda */
+    width: calc(100% - 145px); /* Deixa espaço para imagem */
+}
+#informacoesVeiculo h4 { /* Títulos (Histórico, etc.) */
+     margin-top: 20px;
+     margin-bottom: 8px;
+     color: #444;
+     font-size: 1.1em;
+     border-bottom: 1px solid #eee;
+     padding-bottom: 5px;
+     clear: both; /* Garante que fique abaixo da imagem/título */
+}
+#informacoesVeiculo img { /* Imagem na área de detalhes */
+    max-width: 120px;
+    float: right;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+#informacoesVeiculo p { /* Parágrafos com infos */
+    line-height: 1.6;
+    color: #333;
+    clear: left; /* Para ficar abaixo do título flutuante */
+    margin-top: 5px;
+}
+#informacoesVeiculo pre { /* Histórico e Agendamentos Futuros */
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 0.9em;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+    padding: 12px;
+    border: 1px dashed #ddd;
+    background-color: #f8f9fa; /* Fundo levemente cinza */
+    border-radius: 4px;
+    max-height: 200px; /* Aumentar altura máxima */
+    overflow-y: auto;
+    line-height: 1.5;
+    clear: both;
+}
+
+/* Formulário de Agendamento */
+#agendamento-form-container {
+    margin-top: 25px; /* Mais espaço */
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    clear: both;
+    /* display: none; será controlado por JS */
+}
+#agendamento-form-container h3 {
+    text-align: left;
+    color: #0056b3;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+#form-agendamento {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Label e Input */
+    gap: 12px 15px; /* Aumentar espaçamento vertical */
+    align-items: center;
+}
+#form-agendamento label {
+    text-align: right;
+    font-weight: bold;
+    color: #555;
+    font-size: 0.9em;
+}
+#form-agendamento input[type="date"],
+#form-agendamento input[type="text"],
+#form-agendamento input[type="number"],
+#form-agendamento textarea {
+    width: 100%;
+    padding: 9px 12px; /* Mais padding interno */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95em;
+    box-sizing: border-box;
+}
+#form-agendamento input:focus,
+#form-agendamento textarea:focus { /* Destaque no foco */
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+#form-agendamento textarea {
+    resize: vertical;
+    grid-column: 2 / 3; /* Ocupa a segunda coluna */
+    min-height: 60px; /* Altura mínima */
+}
+/* Label do Textarea alinhado com outros labels */
+#form-agendamento label[for="agenda-descricao"] {
+    align-self: start; /* Alinha no topo */
+    padding-top: 9px; /* Ajusta alinhamento vertical */
+}
+
+#form-agendamento button[type="submit"] {
+    grid-column: 2 / 3;
+    justify-self: start;
+    padding: 10px 20px;
+    background-color: #28a745; /* Verde */
+    font-size: 1em;
+    color: white;
+}
+#form-agendamento button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Agendamentos Futuros */
+#agendamentos-futuros-container {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px dashed #ccc;
+    clear: both;
+     /* display: none; será controlado por JS */
+}
+#agendamentos-futuros-container h4 {
+    text-align: left;
+    color: #dc3545; /* Vermelho para destaque */
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+#agendamentos-futuros-conteudo { /* Mesmo estilo de <pre> */
+    background-color: #fff8f8; /* Fundo levemente avermelhado/rosa */
+}
+
+
+/* Notificações */
+.notificacoes-container {
+    position: fixed;
+    top: 15px; /* Um pouco mais para baixo */
+    right: 15px;
+    width: 320px; /* Pouco mais largo */
+    z-index: 1050; /* Acima de outros elementos */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espaço entre notificações */
+}
+.notificacao {
+    color: #333; /* Cor base do texto */
+    border: 1px solid #ddd;
+    border-left-width: 5px; /* Borda lateral mais grossa */
+    padding: 15px 40px 15px 15px; /* Espaço para botão fechar */
+    margin-bottom: 0; /* Removido, usando gap no container */
+    border-radius: 5px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    font-size: 0.9em;
+    opacity: 0; /* Começa invisível */
+    transform: translateX(100%); /* Começa fora da tela */
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    position: relative; /* Para o botão fechar */
+    cursor: pointer; /* Indica que é clicável para fechar */
+    background-color: #fff; /* Fundo branco padrão */
+    word-wrap: break-word;
+}
+/* Animação de entrada */
+.notificacao.show {
+    opacity: 0.98; /* Quase totalmente opaco */
+    transform: translateX(0);
+}
+
+/* Tipos de Notificação */
+.notificacao.info {
+     background-color: #e7f3fe;
+     color: #0c5460;
+     border-color: #b8daff;
+     border-left-color: #007bff; /* Azul */
+}
+.notificacao.sucesso {
+     background-color: #eaf7ec;
+     color: #155724;
+     border-color: #c3e6cb;
+     border-left-color: #28a745; /* Verde */
+}
+.notificacao.aviso {
+     background-color: #fff9e6;
+     color: #856404;
+     border-color: #ffeeba;
+     border-left-color: #ffc107; /* Amarelo */
+}
+.notificacao.erro {
+     background-color: #fdecea;
+     color: #721c24;
+     border-color: #f5c6cb;
+     border-left-color: #dc3545; /* Vermelho */
+}
+
+/* Botão Fechar Notificação */
+.notificacao .close-btn {
+    position: absolute;
+    top: 50%; /* Centraliza verticalmente */
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1.6em; /* Maior */
+    line-height: 1;
+    color: inherit; /* Usa cor do texto da notificação */
+    opacity: 0.5; /* Mais sutil */
+    cursor: pointer;
+    padding: 5px; /* Área de clique maior */
+}
+.notificacao:hover .close-btn {
+    opacity: 0.8; /* Mais visível no hover da notificação */
+}
+.notificacao .close-btn:hover {
+    opacity: 1; /* Totalmente visível no hover do botão */
+}
+
+/* Animação Mover (para o carro) */
 @keyframes mover {
-    0% {
-        left: 0;
+  0%, 100% { transform: translateX(0) rotate(0); }
+  25% { transform: translateX(-4px) rotate(-0.5deg); }
+  75% { transform: translateX(4px) rotate(0.5deg); }
+}
+/* Classe aplicada pelo JS */
+.mover-animacao {
+  animation: mover 0.7s ease-in-out infinite;
+}
+
+
+/* --- Media Queries (Responsividade) --- */
+
+@media (max-width: 1200px) {
+    .veiculo-container {
+        width: calc(50% - 30px); /* 2 colunas, margem ajustada */
+        min-width: 260px;
     }
-    100% {
-        left: 200px; /* Ajuste a distância do movimento */
+}
+
+@media (max-width: 992px) {
+     .container { width: 100%; }
+     .veiculo-container {
+        width: calc(50% - 24px); /* Margem menor */
+         padding: 12px;
+     }
+     .selecao-container { width: 90%; }
+     .detalhes-container { width: 90%; padding: 20px; }
+     .notificacoes-container { width: 300px; }
+}
+
+
+@media (max-width: 768px) {
+    body { padding: 15px; }
+    .container {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .veiculo-container {
+        width: 90%; /* Largura maior */
+        max-width: 450px; /* Limite máximo */
+        min-width: unset;
+        margin-bottom: 20px;
+        margin-left: auto; /* Centraliza */
+        margin-right: auto;
+    }
+    .selecao-container { width: 95%; }
+    .detalhes-container { width: 95%; padding: 15px; }
+
+    /* Ajustes área detalhes mobile */
+     #informacoesVeiculo h3 { float: none; width: 100%; text-align: center; }
+     #informacoesVeiculo img { float: none; display: block; margin: 10px auto 15px; max-width: 100px;}
+     #informacoesVeiculo p { clear: none; text-align: center;}
+     #informacoesVeiculo h4 { text-align: center; }
+     #informacoesVeiculo pre { text-align: left; max-height: 150px;}
+
+     /* Ajustes formulário mobile */
+    #form-agendamento {
+        grid-template-columns: 1fr; /* Uma coluna */
+    }
+    #form-agendamento label {
+        text-align: left; /* Alinha labels à esquerda */
+        margin-bottom: -8px; /* Reduz espaço abaixo do label */
+    }
+    #form-agendamento label[for="agenda-descricao"] {
+       padding-top: 0; /* Reseta ajuste */
+    }
+    #form-agendamento button[type="submit"],
+    #form-agendamento textarea {
+         grid-column: 1 / 2; /* Ocupa a única coluna */
+    }
+     #form-agendamento button[type="submit"] {
+        width: 100%; /* Botão ocupa largura total */
+        justify-self: center;
+    }
+
+     .notificacoes-container {
+        width: 90%;
+        max-width: 400px;
+        left: 50%; /* Centraliza */
+        transform: translateX(-50%);
+        right: auto;
+        top: 10px;
     }
 }
 
-#ligar{
-    background-color: green;
-}
+@media (max-width: 480px) {
+     body { padding: 10px; }
+     h1 { font-size: 1.6em; }
+     .veiculo-container { width: 95%; padding: 10px; }
+     .veiculo-container h2 { font-size: 1.2em; }
+     .veiculo-container p { font-size: 0.9em; }
+     button { padding: 7px 10px; font-size: 0.8em;}
+     #quantidade-carga-caminhao { width: 60px; padding: 6px 8px;}
 
-#desligar{
-    background-color: red;
-}
+     .selecao-container h2 { font-size: 1.2em; }
+     .selecao-container button { padding: 8px 12px; font-size: 0.9em; margin: 3px;}
 
-#acelerar{
-    background-color: yellow;
+     .detalhes-container h2 { font-size: 1.3em; }
+     #informacoesVeiculo h3, #informacoesVeiculo h4 { font-size: 1.1em; }
+     #agendamento-form-container h3 { font-size: 1.1em; }
+     #form-agendamento input, #form-agendamento textarea { font-size: 0.9em; padding: 8px 10px;}
+
+     .notificacoes-container { width: 95%; }
+     .notificacao { font-size: 0.85em; padding: 12px 35px 12px 12px;}
+     .notificacao .close-btn { font-size: 1.4em; top: 45%; right: 8px; }
 }
